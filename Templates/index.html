@@ -1,0 +1,179 @@
+<!Doctype html>
+
+<html>
+    <head>
+
+        <!-- CSS code -->
+        <style>
+        /* Styling the website background */
+            body {
+              background-color: #e2f3f5;
+              background-image: linear-gradient(45deg, #93a5cf, #e4efe9);
+              animation: gradientAnimation 10s ease infinite;
+            }
+
+            /* Styling the form */
+            form {
+              width: 70%;
+              margin: 0 auto;
+              padding: 20px;
+              background: rgba(255, 255, 255, 0.9);
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              box-shadow: 0 0 10px #ddd;
+              animation: fadeIn 0.5s ease;
+            }
+
+            legend {
+              font-size: 24px;
+              font-weight: bold;
+              color: #4CAF50;
+            }
+
+            input[type="number"],
+            input[type="text"] {
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 20px;
+              border-radius: 5px;
+              border: 1px solid #ddd;
+              font-size: 18px;
+              color: #333;
+              transition: all 0.3s ease;
+            }
+
+            input[type="number"]:focus,
+            input[type="text"]:focus {
+              border-color: #4CAF50;
+            }
+
+            input[type="submit"] {
+              background: #4CAF50;
+              color: white;
+              font-size: 18px;
+              padding: 10px 20px;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+            }
+
+            input[type="submit"]:hover {
+              background: #3e8e41;
+              transform: scale(1.05);
+            }
+
+            /* Styling the result container */
+            .result {
+              width: 70%;
+              margin: 20px auto;
+              padding: 20px;
+              background: #fff;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              box-shadow: 0 0 10px #ddd;
+              font-size: 18px;
+              color: #333;
+              animation: slideUp 0.5s ease;
+            }
+
+            /* Keyframes for animations */
+            @keyframes fadeIn {
+              from {
+                opacity: 0;
+              }
+              to {
+                opacity: 1;
+              }
+            }
+
+            @keyframes slideUp {
+              from {
+                transform: translateY(20px);
+                opacity: 0;
+              }
+              to {
+                transform: translateY(0);
+                opacity: 1;
+              }
+            }
+
+            @keyframes gradientAnimation {
+              0% {
+                background-position: 0% 50%;
+              }
+              50% {
+                background-position: 100% 50%;
+              }
+              100% {
+                background-position: 0% 50%;
+              }
+            }
+
+        </style>
+
+        <title>Credit Risk Prediction Tool</title>
+
+<!--        form validation-->
+
+        <script>
+            function validateAge() {
+              var ageInput = document.getElementById('age');
+              var ageValue = ageInput.value;
+              var ageError = document.getElementById('age-error');
+
+              if (ageValue < 18) {
+                ageError.innerHTML = 'Age must be greater than 18';
+                ageError.style.display = 'block';
+                ageInput.setCustomValidity('Age must be greater than 18');
+              } else {
+                ageError.innerHTML = '';
+                ageError.style.display = 'none';
+                ageInput.setCustomValidity('');
+              }
+            }
+        </script>
+    </head>
+
+    <body>
+
+        <!-- Using the action attribute to call the 'main' function -->
+        <form action="{{ url_for('main') }}" method="POST">
+        <fieldset>
+            <legend>Input values:</legend>
+            Age:
+            <!-- Required attribute is used to make sure people input values -->
+            <input id="age" name="Age" type="number" required oninput="validateAge()">
+            <span id="age-error" style="display: none; color: red;"></span>
+            <br>
+            <br> Job:
+            <input name="Job" type="number" required>
+            <br>
+            <br> Credit Amount (Loan Amount):
+            <input name="Credit_amount" type="number" required>
+            <br>
+            <br> Duration (in months):
+            <input name="Duration" type="number" required>
+            <br>
+            <br> Purpose:
+            <input name="Purpose" type="text" required>
+            <br>
+            <br> Gender:
+            <input name="Sex" type="text" required>
+            <br>
+            <br> Housing Type:
+            <input name="Housing" type="text" required>
+            <br><br>
+
+            <button type="submit" onclick="displayMessage()">Predict</button>
+        </fieldset>
+        </form>
+
+        <br>
+
+        <div class = "result" id="message-container">{{ result }}</div>
+
+
+    </body>
+
+</html>
